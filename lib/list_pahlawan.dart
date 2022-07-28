@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:submission/pahlawan.dart';
-
 import 'detail_pahlawan.dart';
 
 class ListPahlawan extends StatelessWidget {
@@ -10,16 +9,11 @@ class ListPahlawan extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pahlawan'),
       ),
-      // body: LayoutBuilder(
-      //     builder: (BuildContext context, BoxConstraints constraints) {
-      //   if (constraints.maxWidth <= 600) {
-      //     return const TourismPlaceList();
-      //   } else if (constraints.maxWidth <= 1200) {
-      //     return TourismPlaceGrid(gridCount: 4);
-      //   } else {
-      //     return TourismPlaceGrid(gridCount: 6);
-      //   }
-      // }),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+            return PahlawanList();
+        },
+      ),
     );
   }
 }
@@ -41,17 +35,29 @@ class PahlawanList extends StatelessWidget {
                   }));
                 },
               child: Card(
+                elevation: 2,
+                borderOnForeground: true,
                 child: Row (
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Image.asset(listPahlawan.imageAsset)
+                    Expanded(
+                      flex: 1,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: AssetImage(listPahlawan.imageAsset),
+                          ),
+                          title: Text(listPahlawan.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          subtitle: Text(listPahlawan.origin, style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic))
+                        )
+                    ),
                   ],
                 ),
               ),
-
             );
-          }
-      )
+          },
+          itemCount: PahlawanListData.length
+      ),
     );
   }
 }
