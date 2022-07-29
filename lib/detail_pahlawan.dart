@@ -63,7 +63,7 @@ class DetailMobilePage extends StatelessWidget {
                 ),
               ),
             Container(
-              margin: EdgeInsets.only(top: 16),
+              margin: EdgeInsets.only(top: 15),
               child: Column(
                 children:[
                   Text(
@@ -91,6 +91,18 @@ class DetailMobilePage extends StatelessWidget {
                     ],
                   )
                 ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8),
+              child: Text(
+                pahlawan.description,
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.normal
+                ),
               ),
             )
           ],
