@@ -8,24 +8,10 @@ class DetailPahlawan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Pahlawan'),
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: const Text(
-                'Detail Pahlawan',
-                style: TextStyle(fontSize: 20),
-              ),
-            )
-          ],
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+          return DetailMobilePage(pahlawan: pahlawan,);
+      },
     );
   }
 }
@@ -42,33 +28,70 @@ class DetailMobilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Stack(
-              children: <Widget> [
-                Image.asset(pahlawan.imageAsset),
-                SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: Colors.white,
+            Container(
+              child: Stack(
+                  children: <Widget> [
+                    Container(
+                        height: 500,
+                        width: 500,
+                        child: Image.asset(pahlawan.imageAsset, fit: BoxFit.cover)
+                    ),
+                    SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  },
+                                ),
                               ),
-                              onPressed: (){
-                                Navigator.pop(context);
-                              },
-                            ),
+                              BookmarkButton(),
+                            ],
                           ),
-                          BookmarkButton(),
-                        ],
-                      ),
+                        )
                     )
-                )
-              ],
+                  ],
+                ),
+              ),
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              child: Column(
+                children:[
+                  Text(
+                    pahlawan.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Poppins'
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on_rounded,
+                        color: Colors.blue,
+                      ),
+                      Text(pahlawan.origin,
+                      textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Poppins'
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
