@@ -31,7 +31,7 @@ class PahlawanList extends StatelessWidget {
             return InkWell(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return DetailPahlawan();
+                      return DetailPahlawan(pahlawan: listPahlawan);
                   }));
                 },
               child: Card(
