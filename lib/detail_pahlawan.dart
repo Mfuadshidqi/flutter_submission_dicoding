@@ -11,7 +11,7 @@ class DetailPahlawan extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > 550) {
           return DetailWebPage(pahlawan: pahlawan);
         } else {
           return DetailMobilePage(pahlawan: pahlawan);
@@ -117,17 +117,10 @@ class DetailMobilePage extends StatelessWidget {
   }
 }
 
-class DetailWebPage extends StatefulWidget {
+class DetailWebPage extends StatelessWidget{
   final Pahlawan pahlawan;
 
-  const DetailWebPage ({Key? key, required this.pahlawan}) : super (key: key);
-
-  @override
-  _DetailWebPageState createState() => _DetailWebPageState();
-}
-
-class _DetailWebPageState extends State<DetailWebPage>{
-  final _scrollController = ScrollController();
+  const DetailWebPage({Key? key, required this.pahlawan}) : super(key: key);
 
   @override
   Widget build (BuildContext context){
@@ -142,7 +135,7 @@ class _DetailWebPageState extends State<DetailWebPage>{
         child: ListView.builder(
           itemBuilder: (context, index){
             return Container(
-              width: screenWidth <= 1200 ? 600 : 1200,
+              width: screenWidth <= 1200 ? 550 : 1200,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -161,7 +154,7 @@ class _DetailWebPageState extends State<DetailWebPage>{
                         child: Column(
                           children: [
                             ClipRRect(
-                              child: Image.asset(widget.pahlawan.imageAsset, fit: BoxFit.cover),
+                              child: Image.asset(pahlawan.imageAsset, fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ],
@@ -177,7 +170,7 @@ class _DetailWebPageState extends State<DetailWebPage>{
                               children: <Widget>[
                                 Container(
                                   child: Text(
-                                    widget.pahlawan.name,
+                                    pahlawan.name,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 30.0,
@@ -194,7 +187,7 @@ class _DetailWebPageState extends State<DetailWebPage>{
                                         const Icon(Icons.location_on_rounded, color: Colors.blue,),
                                         const SizedBox(width: 8.0),
                                         Text(
-                                          widget.pahlawan.origin,
+                                          pahlawan.origin,
                                         ),
                                       ],
                                     ),
@@ -204,7 +197,7 @@ class _DetailWebPageState extends State<DetailWebPage>{
                                 Container(
                                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                                   child: Text(
-                                    widget.pahlawan.description,
+                                    pahlawan.description,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -227,11 +220,6 @@ class _DetailWebPageState extends State<DetailWebPage>{
         ),
       ),
     );
-  }
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 }
 
