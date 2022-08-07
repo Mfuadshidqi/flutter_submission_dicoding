@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:submission/pahlawan.dart';
 import 'detail_pahlawan.dart';
 
@@ -11,7 +14,13 @@ class ListPahlawan extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-            return PahlawanList();
+          if (constraints.maxWidth <= 600) {
+            return const PahlawanList();
+          } else if (constraints.maxWidth <= 1200) {
+            return PahlawanGrid(gridCount: 4);
+          } else {
+            return PahlawanGrid(gridCount: 6);
+          }
         },
       ),
     );
@@ -57,6 +66,67 @@ class PahlawanList extends StatelessWidget {
             );
           },
           itemCount: PahlawanListData.length
+      ),
+    );
+  }
+}
+
+class PahlawanGrid extends StatelessWidget {
+  final int gridCount;
+
+  PahlawanGrid({required this.gridCount});
+
+  @override
+  Widget build(BuildContext context){
+    return Scrollbar(
+      isAlwaysShown: true,
+      child: Padding(
+        padding: EdgeInsets.all(24.0),
+        child: GridView.count(
+          crossAxisCount: gridCount,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          children: PahlawanListData.map((pahlawan){
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DetailPahlawan(pahlawan: pahlawan);
+                }));
+              },
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        pahlawan.imageAsset,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        pahlawan.name,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                      child: Text(
+                        pahlawan.origin,
+                      ),
+                    ),
+                  ],
+                ),
+
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

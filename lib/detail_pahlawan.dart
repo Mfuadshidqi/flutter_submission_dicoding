@@ -10,7 +10,7 @@ class DetailPahlawan extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-          return DetailMobilePage(pahlawan: pahlawan,);
+          return DetailMobilePage(pahlawan: pahlawan);
       },
     );
   }
@@ -111,6 +111,27 @@ class DetailMobilePage extends StatelessWidget {
     );
   }
 }
+
+// class DetailWebPage extends StatefulWidget {
+//   final Pahlawan pahlawan;
+//
+//   const DetailWebPage ({Key? key, required this.pahlawan}) : super (key: key);
+//
+//   @override
+//   _DetailWebPage createState() => _DetailWebPage();
+// }
+
+// class _DetailWebPage extends State<DetailWebPage>{
+//   final _scrollController = ScrollController();
+//
+//   // @override
+//   // Widget build (BuildContext context){
+//   //   final screenWidth = MediaQuery.of(context).size.width;
+//   //
+//   //
+//   // }
+// }
+
 
 class BookmarkButton extends StatefulWidget{
   @override
