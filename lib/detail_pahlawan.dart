@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:submission/pahlawan.dart';
 
@@ -10,7 +11,11 @@ class DetailPahlawan extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth > 600) {
+          return DetailWebPage(pahlawan: pahlawan);
+        } else {
           return DetailMobilePage(pahlawan: pahlawan);
+        }
       },
     );
   }
@@ -112,25 +117,123 @@ class DetailMobilePage extends StatelessWidget {
   }
 }
 
-// class DetailWebPage extends StatefulWidget {
-//   final Pahlawan pahlawan;
-//
-//   const DetailWebPage ({Key? key, required this.pahlawan}) : super (key: key);
-//
-//   @override
-//   _DetailWebPage createState() => _DetailWebPage();
-// }
+class DetailWebPage extends StatefulWidget {
+  final Pahlawan pahlawan;
 
-// class _DetailWebPage extends State<DetailWebPage>{
-//   final _scrollController = ScrollController();
-//
-//   // @override
-//   // Widget build (BuildContext context){
-//   //   final screenWidth = MediaQuery.of(context).size.width;
-//   //
-//   //
-//   // }
-// }
+  const DetailWebPage ({Key? key, required this.pahlawan}) : super (key: key);
+
+  @override
+  _DetailWebPageState createState() => _DetailWebPageState();
+}
+
+class _DetailWebPageState extends State<DetailWebPage>{
+  final _scrollController = ScrollController();
+
+  @override
+  Widget build (BuildContext context){
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: kIsWeb? null : AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 64,
+        ),
+        child: ListView.builder(
+          itemBuilder: (context, index){
+            return Container(
+              width: screenWidth <= 1200 ? 600 : 1200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    'Pahlawan Nasional',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 32,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              child: Image.asset(widget.pahlawan.imageAsset, fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 32),
+                      Expanded(
+                        child: Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    widget.pahlawan.name,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 30.0,
+                                      fontFamily: 'Staatliches',
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: <Widget>[
+                                        const Icon(Icons.location_on_rounded, color: Colors.blue,),
+                                        const SizedBox(width: 8.0),
+                                        Text(
+                                          widget.pahlawan.origin,
+                                        ),
+                                      ],
+                                    ),
+                                    BookmarkButton(),
+                                  ],
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                  child: Text(
+                                    widget.pahlawan.description,
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: 'Oxygen',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+          itemCount: 1,
+        ),
+      ),
+    );
+  }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
 
 
 class BookmarkButton extends StatefulWidget{
